@@ -36,10 +36,22 @@ package.json                   one dependency, @netlify/blobs
   `Total Billed` amount, which is the revenue at risk figure. It is never counted
   as actual revenue.
 - **Scheduled hours**: delivered hours on the selected statuses, plus missed.
-- **Gross margin**: Total Billed minus Total Paid.
+- **Gross margin**: Total Billed minus Total Paid. This is a direct wage margin,
+  not the P/L gross margin. See loaded margin below.
+- **Loaded margin**: Total Billed minus Total Paid grossed up by the burden rate
+  (payroll taxes plus benefits as a percent of direct wages). This is the figure
+  that lines up with gross profit on the income statement. Default burden 16.2%,
+  from the May 2026 state P/L.
+- **Break-even margin**: the loaded gross margin that covers 4-wall overhead.
+  Default 29.0%, the Jan to May 2026 actual. Editable on the Clinician Detail
+  card; both settings are stored with the targets document and shared.
+- **Contribution gap**: for a clinician under the break-even margin, revenue
+  times the shortfall in margin points. Scaling by revenue is deliberate, so a
+  small miss on high volume outranks a large miss on a handful of hours.
 - **Headcount**: distinct `Employee` with delivered hours in the week.
 - Ratios are computed pairwise, so a week with revenue but no labor cannot
-  inflate a margin or a rate.
+  inflate a margin or a rate. The same guard applies per clinician: hours with
+  no posted labor are flagged rather than shown as a 100% margin.
 
 ## Rebuilding index.html
 
